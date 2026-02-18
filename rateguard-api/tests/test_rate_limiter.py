@@ -4,6 +4,7 @@ import pytest
 
 from app.services.rate_limiter import SlidingWindowRateLimiter
 
+#tests - not comprehensive enough (17/2/26)
 
 class FakePipeline:
     """Minimal Redis pipeline emulator for deterministic limiter tests."""
