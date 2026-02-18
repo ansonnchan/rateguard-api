@@ -1,0 +1,147 @@
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{fontawesome5}
+\usepackage[margin=0.65in]{geometry}
+\input{glyphtounicode}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\urlstyle{same}
+\raggedright
+\setlength{\tabcolsep}{0in}
+\setlength{\parindent}{0pt}
+\emergencystretch=2em
+
+\titleformat{\section}
+  {\vspace{-4pt}\scshape\raggedright\large\bfseries}
+  {}{0em}{}[\color{black}\titlerule \vspace{-6pt}]
+
+\pdfgentounicode=1
+
+% -------------------------
+% Custom commands
+\newcommand{\resumeItem}[1]{\item\small{#1}}
+\newcommand{\resumeSubheading}[4]{
+  \item
+  \begin{tabular*}{\textwidth}[t]{l@{\extracolsep{\fill}}r}
+    \textbf{#1} & \textbf{\small #2} \\
+    \textit{\small #3} & \textit{\small #4} \\
+  \end{tabular*}\vspace{-6pt}
+}
+\newcommand{\resumeProjectHeading}[2]{
+  \item
+  \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
+    \small #1 & \textbf{\small #2} \\
+  \end{tabular*}\vspace{-6pt}
+}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0in,label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}[leftmargin=0.18in,label=\textbullet,itemsep=2pt,topsep=2pt]}
+\newcommand{\resumeItemListEnd}{\end{itemize}}
+
+\begin{document}
+
+% ---------- HEADING ----------
+\begin{center}
+    {\Large \scshape Anson Chan} \\[2mm]
+    \footnotesize
+    \faPhone\ (604) 889-2211 \quad
+    \faEnvelope\ ananryry180@gmail.com \quad
+    \faLinkedin\ \href{https://www.linkedin.com/in/ansonnchan/}{linkedin.com/in/ansonnchan} \quad
+    \faGithub\ \href{https://github.com/ansonnchan}{github.com/ansonnchan}
+\end{center}
+
+% ----------- EDUCATION -----------
+\section{Education}
+\resumeSubHeadingListStart
+\resumeSubheading
+{University of British Columbia}{Expected Graduation: May 2028}
+{Bachelor of Applied Science, Computer Engineering}{Vancouver, BC}
+\resumeItemListStart
+\resumeItem{Relevant Coursework: Software Construction I, Computing Systems I/II, Data Structures and Algorithms, Numerical Approximation and Discretization, Probability}
+\resumeItem{Co-op Availability: 16 months beginning May 2026}
+\resumeItemListEnd
+\resumeSubHeadingListEnd
+
+% ----------- WORK EXPERIENCE -----------
+\section{Work Experience}
+\resumeSubHeadingListStart
+\resumeSubheading
+{Borrow'd}{January 2026 -- April 2026}
+{Backend Software Engineer Intern}{Remote}
+\resumeItemListStart
+\resumeItem{Triaged and resolved backend issues in a \textbf{Django} codebase, fixing production-impacting bugs to improve platform stability.}
+\resumeItem{Strengthened \textbf{PostgreSQL} data integrity by correcting relational constraint violations and refining state-validation logic.}
+\resumeItem{Wrote and expanded \textbf{Django} unit tests for critical backend paths, reducing regression risk in production releases.}
+\resumeItem{Collaborated with QA and maintainers to convert bug reports into merged \textbf{GitHub PRs}, improving fix-to-deployment velocity.}
+\resumeItemListEnd
+\resumeSubHeadingListEnd
+
+% ----------- PROJECTS -----------
+\section{Projects}
+\resumeSubHeadingListStart
+
+\resumeProjectHeading
+{\textbf{MyInternship} $|$ \emph{\href{https://internship-tracker-frontend-nu.vercel.app/}{Website} $|$ \href{https://github.com/ansonnchan/MyInternship}{GitHub}}}
+{Java $|$ Spring Boot $|$ Next.js $|$ TypeScript $|$ PostgreSQL}
+\resumeItemListStart
+\resumeItem{Built and deployed a full-stack internship tracker that lets users manage applications in one dashboard.}
+\resumeItem{Developed a \textbf{Spring Boot REST API} with \textbf{PostgreSQL} to support secure, user-specific \textbf{CRUD} operations.}
+\resumeItem{Implemented email classification logic that converts email content into structured status updates, reducing manual tracking effort.}
+\resumeItem{Built a \textbf{TypeScript} + \textbf{Next.js} frontend with \textbf{JWT} authentication and resolved CORS/auth issues during \textbf{Render} and \textbf{Vercel} deployment.}
+\resumeItemListEnd
+
+\resumeProjectHeading
+{\textbf{FindMyDesk UBC} $|$ \emph{\href{https://github.com/ansonnchan/FindMyDesk}{GitHub}}}
+{Java $|$ Spring Boot $|$ REST API $|$ Google Maps API}
+\resumeItemListStart
+\resumeItem{Architected a recommendation engine in \textbf{Spring Boot}, delivering top-5 study spot suggestions based on user location.}
+\resumeItem{Integrated the \textbf{Google Maps API} to compute distances and visualize locations through a custom web interface.}
+\resumeItem{Designed \textbf{RESTful} backend endpoints to support scalable client-server data retrieval.}
+\resumeItemListEnd
+
+\resumeProjectHeading
+{\textbf{WikiMediatorServer} $|$ \emph{\href{https://github.com/ansonnchan/WikiMediatorServer}{GitHub}}}
+{Java $|$ Concurrency $|$ JUnit $|$ Gradle}
+\resumeItemListStart
+\resumeItem{Engineered a thread-safe \textbf{Java} server to process concurrent multi-client query requests correctly.}
+\resumeItem{Designed and implemented a thread-safe \textbf{LRU cache}, reducing redundant external requests and improving response latency.}
+\resumeItem{Developed and executed \textbf{60+ JUnit tests}, automated with \textbf{Gradle}, to validate correctness under concurrent workloads.}
+\resumeItemListEnd
+
+\resumeProjectHeading
+{\textbf{RateGuard API} $|$ \emph{\href{https://github.com/ansonnchan/rateguard-api}{GitHub}}}
+{Python $|$ FastAPI $|$ PostgreSQL $|$ Redis $|$ Docker}
+\resumeItemListStart
+\resumeItem{Built an API protection service that enforces per-user and per-IP rate limits for backend reliability and abuse prevention.}
+\resumeItem{Implemented Redis-based sliding-window throttling with standards-based \texttt{429} responses and retry metadata.}
+\resumeItem{Added API key auth, request logging, and health checks to improve debuggability and cloud deployment readiness.}
+\resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+% ----------- TECHNICAL SKILLS -----------
+\section{Technical Skills}
+\begin{itemize}[leftmargin=0.15in, label={}]
+\item \small{
+\textbf{Languages:} Java, Python, TypeScript, JavaScript, SQL, C/C++ \\
+\textbf{Backend/Infrastructure:} Spring Boot, FastAPI, Django, PostgreSQL, Redis, REST APIs, JWT, Docker \\
+\textbf{Frontend:} Next.js, React, HTML/CSS \\
+\textbf{Developer Tools:} Git/GitHub, VS Code, IntelliJ, AWS, Azure
+}
+\end{itemize}
+
+\end{document}
