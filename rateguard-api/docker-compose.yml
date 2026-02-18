@@ -1,6 +1,6 @@
 services:
   api:
-    # FastAPI service.
+    # FastAPI service
     build: .
     container_name: rateguard-api
     env_file:
