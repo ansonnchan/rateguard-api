@@ -4,11 +4,14 @@ import asyncpg
 
 
 class PostgresClient:
+    """Thin asyncpg wrapper for connection pooling and query helpers."""
+
     def __init__(self, database_url: str) -> None:
         self._database_url = database_url
         self._pool: asyncpg.Pool | None = None
 
     async def connect(self) -> None:
+        # Keep pool bounds conservative for a small service; tune for production traffic.
         self._pool = await asyncpg.create_pool(self._database_url, min_size=1, max_size=10)
 
     async def disconnect(self) -> None:
@@ -29,6 +32,7 @@ class PostgresClient:
             return await connection.fetchval(query, *args)
 
     async def ensure_schema(self) -> None:
+        # Bootstrap schema on startup for quick local setup.
         create_table_query = """
         CREATE TABLE IF NOT EXISTS request_logs (
             id BIGSERIAL PRIMARY KEY,

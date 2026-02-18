@@ -10,16 +10,19 @@ from app.services.logger import RequestLogger
 from app.services.rate_limiter import SlidingWindowRateLimiter
 
 settings = get_settings()
+# Singletons for process lifetime; initialized through FastAPI lifespan.
 postgres_client = PostgresClient(settings.database_url)
 redis_client = RedisClient(settings.redis_url)
 
 
 @asynccontextmanager
 async def lifespan(_: FastAPI):
+    # Start dependencies before serving traffic.
     await postgres_client.connect()
     await postgres_client.ensure_schema()
     await redis_client.connect()
     yield
+    # Graceful shutdown in reverse order.
     await redis_client.disconnect()
     await postgres_client.disconnect()
 
@@ -34,6 +37,7 @@ async def enforce_limits(request: Request, api_key: str) -> tuple[str, int]:
     if redis is None:
         raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="Redis not available")
 
+    # Enforce both dimensions: per API key and per source IP.
     limiter = SlidingWindowRateLimiter(redis, settings.rate_limit_per_minute, window_seconds=60)
     user_allowed, user_remaining = await limiter.allow(f"user:{api_key}")
     ip_allowed, ip_remaining = await limiter.allow(f"ip:{client_ip}")
@@ -50,11 +54,13 @@ async def enforce_limits(request: Request, api_key: str) -> tuple[str, int]:
 
 @app.get("/health/liveness")
 async def liveness() -> dict[str, str]:
+    # Process is up.
     return {"status": "alive"}
 
 
 @app.get("/health/readiness")
 async def readiness() -> dict[str, str]:
+    # Dependencies are reachable and queryable.
     redis = redis_client.client
     if redis is None:
         raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="Redis not ready")
@@ -70,6 +76,7 @@ async def readiness() -> dict[str, str]:
 
 @app.get(f"{settings.api_prefix}/limited")
 async def limited_endpoint(request: Request, api_key: str = Depends(require_api_key)) -> dict[str, str | int]:
+    # Log both accepted and rejected attempts for usage visibility.
     logger = RequestLogger(postgres_client)
 
     try:

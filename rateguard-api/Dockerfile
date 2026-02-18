@@ -2,6 +2,7 @@ FROM python:3.12-slim
 
 WORKDIR /app
 
+# curl is used by the container healthcheck command.
 RUN apt-get update \
     && apt-get install -y --no-install-recommends curl \
     && rm -rf /var/lib/apt/lists/*
@@ -13,6 +14,7 @@ COPY app ./app
 
 EXPOSE 8000
 
+# Liveness check keeps orchestration platforms aware of process health.
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
   CMD curl -f http://localhost:8000/health/liveness || exit 1
 

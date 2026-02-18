@@ -1,5 +1,6 @@
 services:
   api:
+    # FastAPI service.
     build: .
     container_name: rateguard-api
     env_file:
@@ -13,6 +14,7 @@ services:
         condition: service_healthy
 
   postgres:
+    # Stores request log history.
     image: postgres:16-alpine
     container_name: rateguard-postgres
     environment:
@@ -31,6 +33,7 @@ services:
       retries: 5
 
   redis:
+    # Sliding-window state store.
     image: redis:7-alpine
     container_name: rateguard-redis
     ports:
@@ -42,4 +45,5 @@ services:
       retries: 5
 
 volumes:
+  # Persistent Postgres data for local development.
   postgres_data:

@@ -6,6 +6,8 @@ from app.services.rate_limiter import SlidingWindowRateLimiter
 
 
 class FakePipeline:
+    """Minimal Redis pipeline emulator for deterministic limiter tests."""
+
     def __init__(self, redis):
         self.redis = redis
         self.ops = []
@@ -51,6 +53,8 @@ class FakePipeline:
 
 
 class FakeRedis:
+    """In-memory stand-in for Redis sorted-set storage."""
+
     def __init__(self):
         self.data = {}
 
@@ -60,6 +64,7 @@ class FakeRedis:
 
 @pytest.mark.asyncio
 async def test_sliding_window_blocks_after_limit():
+    # Third request in same window should be denied when limit is 2.
     redis = FakeRedis()
     limiter = SlidingWindowRateLimiter(redis, limit=2, window_seconds=60)
 
@@ -74,6 +79,7 @@ async def test_sliding_window_blocks_after_limit():
 
 @pytest.mark.asyncio
 async def test_sliding_window_resets_after_window(monkeypatch):
+    # Requests become allowed again once the first window expires.
     redis = FakeRedis()
     limiter = SlidingWindowRateLimiter(redis, limit=1, window_seconds=1)
 

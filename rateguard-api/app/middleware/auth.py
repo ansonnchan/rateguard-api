@@ -4,6 +4,7 @@ from app.config import get_settings
 
 
 async def require_api_key(x_api_key: str = Header(default="")) -> str:
+    # FastAPI dependency that validates incoming client credentials.
     settings = get_settings()
 
     if not x_api_key or x_api_key not in settings.parsed_api_keys:

@@ -2,6 +2,8 @@ from app.db.postgres import PostgresClient
 
 
 class RequestLogger:
+    """Persists request metadata for auditing and client usage analysis."""
+
     def __init__(self, postgres: PostgresClient) -> None:
         self.postgres = postgres
 
